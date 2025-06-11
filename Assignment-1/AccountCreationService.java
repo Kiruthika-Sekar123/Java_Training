@@ -3,5 +3,5 @@ package com.bankaccountsetup;
 interface AccountCreationService {
     boolean validateAccountDetails();
     String  createAccount();
-    void displayUserDetails();
+    void displayUserDetails(String accountId);
 }
