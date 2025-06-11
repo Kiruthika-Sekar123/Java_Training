@@ -52,9 +52,10 @@ public abstract class BaseAccountService implements AccountCreationService {
         }
     }
 
-    public void displayUserDetails() {
+    public void displayUserDetails(String accountid) {
         System.out.println("\n--- Account Holder Details ---");
         System.out.println("Name: " + customerName);
+        System.out.println("accountNumber: " + accountid);
         System.out.println("Phone Number: " + PhoneNumber);
         System.out.println("PAN Number: " + panNumber);
         System.out.println("Aadhaar Number: " + aadhaarNumber);
@@ -71,4 +72,3 @@ public abstract class BaseAccountService implements AccountCreationService {
     public abstract String openAccount();
 
 }
-
