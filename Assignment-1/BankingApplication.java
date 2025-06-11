@@ -9,13 +9,12 @@ public class BankingApplication {
         while (true) {
             System.out.println("\nWelcome to ICIC Bank Account Setup");
 
-            // Collect all inputs first
             System.out.print("Enter your full name: ");
             String customerName = scanner.nextLine().trim();
 
             System.out.print("Enter your initial deposit: ");
             int initialdeposit = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine(); // consume leftover newline
 
             if (initialdeposit < 500) {
                 System.out.println("Minimum balance must be at least ₹500");
@@ -26,7 +25,7 @@ public class BankingApplication {
             String phoneNumber = scanner.nextLine().trim();
 
             System.out.print("Enter your PAN card number: ");
-            String panNumber = scanner.nextLine().trim();
+            String panNumber = scanner.nextLine().trim().toUpperCase();
 
             System.out.print("Enter your Aadhaar number: ");
             String aadhaarNumber = scanner.nextLine().trim();
@@ -43,10 +42,28 @@ public class BankingApplication {
                 businessProof = scanner.nextLine().trim();
             }
 
-            // Validate required fields
+            // Required field checks
             if (customerName.isEmpty() || panNumber.isEmpty() || aadhaarNumber.isEmpty()
                     || branch.isEmpty() || accountType.isEmpty() || phoneNumber.isEmpty()) {
                 System.out.println("One or more required fields are missing. Please try again.");
+                continue;
+            }
+
+            // Phone number: must be 10 digits numeric
+            if (!phoneNumber.matches("\\d{10}")) {
+                System.out.println("Phone number must be a 10-digit numeric value.");
+                continue;
+            }
+
+            // Aadhaar number: must be 12 digits numeric
+            if (!aadhaarNumber.matches("\\d{12}")) {
+                System.out.println("Aadhaar number must be a 12-digit numeric value.");
+                continue;
+            }
+
+            // PAN: must be 5 letters, 4 digits, 1 letter
+            if (!panNumber.matches("[A-Z]{5}[0-9]{4}[A-Z]")) {
+                System.out.println("PAN number must be 10 characters in the format: 5 letters, 4 digits, 1 letter.");
                 continue;
             }
 
@@ -60,7 +77,6 @@ public class BankingApplication {
                 continue;
             }
 
-            // Confirm before proceeding
             System.out.print("Do you want to create the account with the entered details? (yes/no): ");
             String confirmation = scanner.nextLine().trim();
             if (!confirmation.equalsIgnoreCase("yes")) {
@@ -68,8 +84,9 @@ public class BankingApplication {
                 continue;
             }
 
+            AccountCreationService account;
             if (accountType.equalsIgnoreCase("Savings")) {
-                AccountCreationService account = new SavingsAccountService(
+                account = new SavingsAccountService(
                         customerName,
                         initialdeposit,
                         panNumber,
@@ -79,18 +96,8 @@ public class BankingApplication {
                         phoneNumber,
                         businessProof
                 );
-
-                if (!account.validateAccountDetails()) {
-                    System.out.println("Account validation failed.");
-                    continue; // go back to the start of the loop
-                }
-
-                String accountId = account.createAccount();
-                account.displayUserDetails();
-                System.out.println("Notification: Savings Account " + accountId + " created for " + customerName + " in " + branch + " branch");
-
             } else {
-                AccountCreationService account = new CurrentAccountService(
+                account = new CurrentAccountService(
                         customerName,
                         initialdeposit,
                         panNumber,
@@ -100,19 +107,16 @@ public class BankingApplication {
                         phoneNumber,
                         businessProof
                 );
-
-                if (!account.validateAccountDetails()) {
-                    System.out.println("Account validation failed.");
-                    continue; // go back to the start
-                }
-
-                String accountId = account.createAccount();
-                account.displayUserDetails();
-                System.out.println("Notification: Current Account " + accountId + " created for " + customerName + " in " + branch + " branch");
             }
 
+            if (!account.validateAccountDetails()) {
+                System.out.println("Account validation failed.");
+                continue;
+            }
 
-            // Ask if the user wants to create another account
+            String accountId = account.createAccount();
+            account.displayUserDetails(accountId);
+
             System.out.print("\nDo you want to create another account? (yes/no): ");
             String continueChoice = scanner.nextLine().trim();
             if (!continueChoice.equalsIgnoreCase("yes")) {
