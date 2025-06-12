@@ -13,19 +13,20 @@ public class ExceptionHandling {
             }
 
         } catch (Exception ex) {
-            System.out.println(ex + ex.getMessage());
+            System.out.println(ex + ex.getMessage());  //java.lang.ArrayIndexOutOfBoundsException
         }
 
         System.out.println();
 
-        String name = null;
+        
         
         try {
+             String name = null;
         	
             System.out.println(name.charAt(0));
             
         } catch (Exception ex) {
-            System.out.println(ex + " " + ex.getMessage());
+            System.out.println(ex + " " + ex.getMessage()); //java.lang.NullPointerException
         }
 
         System.out.println();
