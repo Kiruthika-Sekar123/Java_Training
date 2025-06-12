@@ -1,1 +1,1 @@
-# java_traning
+# java_training
