@@ -83,8 +83,6 @@ public class TelecomCustomerSystem {
                         callService = new CallService(currentCustomer);
                         System.out.println("Customer registered successfully.");
                         break;
-                        
-                        break;
 
                     case 2:
                         customerService.showAllCustomerDetails();
