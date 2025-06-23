@@ -44,8 +44,45 @@ public class TelecomCustomerSystem {
                 switch (option) {
                     case 1:
                         System.out.println("Provide the Details to Register Phone Number");
-                        
-                        // Registration logic...
+
+                        String name;
+                        do {
+                            System.out.print("Name: ");
+                            name = scanner.nextLine().trim();
+                            if (name.isEmpty()) {
+                                System.out.println("Name cannot be empty.");
+                            } else if (!name.matches("[a-zA-Z]+")) {
+                                System.out.println("Name must only contain letters (no spaces or special characters).");
+                            }
+                        } while (name.isEmpty() || !name.matches("[a-zA-Z]+"));
+
+                        String phoneNumber;
+                        do {
+                            System.out.print("Phone Number: ");
+                            phoneNumber = scanner.nextLine().trim();
+                            if (!phoneNumber.matches("\\d{10}")) {
+                                System.out.println("Enter a valid 10-digit phone number.");
+                                phoneNumber = "";
+                            }
+                        } while (phoneNumber.isEmpty());
+
+                        String addressProof;
+                        do {
+                            System.out.print("Address Proof (12-digit number): ");
+                            addressProof = scanner.nextLine().trim();
+                            if (!addressProof.matches("\\d{12}")) {
+                                System.out.println("Address Proof must be a 12-digit number.");
+                                addressProof = "";
+                            }
+                        } while (addressProof.isEmpty());
+
+                        currentCustomer = new Customer(name, phoneNumber, addressProof);                  
+                        customerService.addCustomer(currentCustomer);
+                        subscribeService.addCustomer(currentCustomer);
+                        file.addCustomer(currentCustomer);
+                        callService = new CallService(currentCustomer);
+                        System.out.println("Customer registered successfully.");
+                        break;
                         
                         break;
 
