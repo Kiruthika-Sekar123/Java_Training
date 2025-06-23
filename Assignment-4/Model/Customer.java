@@ -5,11 +5,17 @@ import java.util.List;
 
 public class Customer {
     private int CustomerId;
-	private String name;
+    private String name;
     private String phoneNumber;
     private String addressProof;
     private List<String> subscribedServices = new ArrayList<>();
     private List<String> complaints = new ArrayList<>();
+
+public Customer(String name, String phoneNumber, String addressProof) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.addressProof = addressProof;
+    }
 
     public String getName() {
 		return name;
@@ -44,12 +50,6 @@ public class Customer {
 		}
 
 
-	public Customer(String name, String phoneNumber, String addressProof) {
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.addressProof = addressProof;
-    }
-
     public void addSubscribedService(String service) {
         if (!subscribedServices.contains(service)) {
             subscribedServices.add(service);
@@ -69,12 +69,6 @@ public class Customer {
     }
     
 
-    @Override
-	public String toString() {
-		return "Customer [name=" + name + ", phoneNumber=" + phoneNumber + ", addressProof=" + addressProof
-				+ ", subscribedServices=" + subscribedServices + ", complaints=" + complaints + "]";
-	}
-
 	public int getCustomerId() {
 		return CustomerId;
 	}
@@ -85,6 +79,12 @@ public class Customer {
 
 	public boolean removeSubscribedService(String service) {
 		return subscribedServices.remove(service);
+	}
+
+	 @Override
+	public String toString() {
+		return "Customer [name=" + name + ", phoneNumber=" + phoneNumber + ", addressProof=" + addressProof
+				+ ", subscribedServices=" + subscribedServices + ", complaints=" + complaints + "]";
 	}
 
 }
