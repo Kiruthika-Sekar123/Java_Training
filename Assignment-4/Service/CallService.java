@@ -21,65 +21,6 @@ public class CallService {
         this.callHistory= new LinkedList<>();
     }
 
-    public void addCustomer(Customer customer) {
-        customerMap.put(customer.getPhoneNumber(), customer);
-    }
-
-    public void showAllCustomerDetails() {
-        if (customerMap.isEmpty()) {
-            System.out.println("No customers registered.");
-        } else {
-            customerMap.forEach((phone, customer) -> {
-                System.out.println("Customer Name: " + customer.getName());
-                System.out.println("Phone: " + customer.getPhoneNumber());
-                System.out.println("Address Proof: " + customer.getAddressProof());
-            });
-        }
-    }
-
-    public void subscribeService(String phoneNumber, String service) {
-        Customer customer = customerMap.get(phoneNumber);
-        if (customer != null) {
-            customer.addSubscribedService(service);
-            System.out.println("Service " + service + " subscribed to " + customer.getName());
-        } else {
-            System.out.println("Customer not found.");
-        }
-    }
-
-    public void fileComplaint(String phoneNumber, String complaint) {
-        Customer customer = customerMap.get(phoneNumber);
-        if (customer != null) {
-            customer.addComplaint(complaint);
-            System.out.println("Complaint filed successfully.");
-        } else {
-            System.out.println("Customer not found.");
-        }
-    }
-
-    public void getComplaints(String phoneNumber) {
-        Customer customer = customerMap.get(phoneNumber);
-        if (customer != null) {
-            System.out.println("Complaints for " + customer.getName() + ":");
-            customer.getComplaints().forEach(System.out::println);
-        } else {
-            System.out.println("Customer not found.");
-        }
-    }
-
-    public void showCustomerDetails(String phoneNumber) {
-        Customer customer = customerMap.get(phoneNumber);
-        if (customer != null) {
-            System.out.println("Name: " + customer.getName());
-            System.out.println("Phone: " + customer.getPhoneNumber());
-            System.out.println("Address Proof: " + customer.getAddressProof());
-            System.out.println("Subscribed Services: " + customer.getSubscribedServices());
-            System.out.println("Complaints: " + customer.getComplaints());
-        } else {
-            System.out.println("Customer not found.");
-        }
-    }
-
     // Method to simulate an outgoing call
     public void outGoingCall(String phoneNumber) {
         System.out.println("Making an outgoing call to " + phoneNumber);
