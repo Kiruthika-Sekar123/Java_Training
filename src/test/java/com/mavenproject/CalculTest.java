@@ -10,5 +10,8 @@ public class CalculTest {
       @Test
       public void add() {
     	  assertEquals(11,cal.add(10, 1));
-      }   
+      }
+      
+      
+      
 }
