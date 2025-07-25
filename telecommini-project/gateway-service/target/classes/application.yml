@@ -1,0 +1,51 @@
+server:
+  port: 8999
+
+spring:
+  application:
+    name: gateway_service
+  web-application-type: reactive
+
+  cloud:
+    gateway:
+      default-filters:
+        - RemoveRequestHeader=Cookie
+      routes:
+        - id: auth-service
+          uri: lb://auth_service
+          predicates:
+            - Path=/auth/**
+
+        - id: user-service
+          uri: lb://user_service
+          predicates:
+            - Path=/users/**
+
+        - id: plan-service
+          uri: lb://plan_service
+          predicates:
+            - Path=/plans/**
+
+        - id: recharge-service
+          uri: lb://recharge_service
+          predicates:
+            - Path=/recharge/**
+
+
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+
+pv:
+  app:
+    jwtSecret: VGhpcy1pc19hX3NhbXBsZV9zZWNyZXQtbXVzdF95b3VfcHJvZHVjZQ==
+    jwtExpirationMs: 86400000
+    jwtCookieName: accessToken
+    jwtRefreshCookieName: refreshToken
