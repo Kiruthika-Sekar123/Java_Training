@@ -1,0 +1,4 @@
+com\smarttelecom\apigateway\utils\Jwtutilis.class
+com\smarttelecom\apigateway\ApigatewayApplication.class
+com\smarttelecom\apigateway\router\RouteValidator.class
+com\smarttelecom\apigateway\filter\AuthenticationFilter.class
